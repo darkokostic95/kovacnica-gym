@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kovačnica · Strength gym in Niš · Classes, coaching and memberships</title>
+<meta name="description" content="Strength gym in Niš with coached classes, open gym from 06:00 to 23:00 and personal training. See the class timetable and book a free first training.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --concrete: #DEDFDC; --chalk: #F7F7F5; --rubber: #1C1D1F; --steel: #55595F; --line: #C3C5C1; --cobalt: #2A48D8; --cobalt-dark: #1F37A8; --plate-red: #C7372F; --plate-yellow: #E8B22E; --plate-green: #2F8A4C; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--concrete); color: var(--rubber); font: 400 17px/1.6 "Barlow", system-ui, sans-serif; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+  h1, h2, h3 { font-family: "Barlow Condensed", sans-serif; font-weight: 800; text-transform: uppercase; margin: 0; line-height: .92; letter-spacing: .005em; }
+  .wrap { width: min(1200px, 100% - 40px); margin-inline: auto; }
+
+  header { background: var(--chalk); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+  .nav { display: flex; align-items: center; gap: 28px; height: 66px; }
+  .logo { font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; text-decoration: none; margin-right: auto; }
+  .nav a.link { text-decoration: none; font-weight: 600; }
+  .nav a.link:hover { color: var(--cobalt); }
+  .btn { display: inline-block; font: 600 16px "Barlow"; padding: 13px 22px; border-radius: 4px; border: 2px solid var(--cobalt); background: var(--cobalt); color: #fff; text-decoration: none; cursor: pointer; }
+  .btn:hover { background: var(--cobalt-dark); border-color: var(--cobalt-dark); }
+  .btn.outline { background: transparent; color: var(--rubber); border-color: var(--rubber); }
+  .btn.outline:hover { background: var(--rubber); color: #fff; }
+
+  /* Hero: photo left, cobalt block right */
+  .hero { display: grid; grid-template-columns: 1.15fr 1fr; min-height: 600px; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; }
+  .hero .panel { background: var(--cobalt); color: #fff; padding: clamp(32px, 5vw, 72px); display: flex; flex-direction: column; justify-content: center; }
+  .hero h1 { font-size: clamp(64px, 8vw, 128px); }
+  .hero p { font-size: 20px; max-width: 26em; margin: 22px 0 30px; color: #DCE2FF; }
+  .hero .btn { background: #fff; color: var(--cobalt); border-color: #fff; }
+  .hero .btn:hover { background: var(--rubber); color: #fff; border-color: var(--rubber); }
+  .hero .status { margin-top: 30px; font-weight: 600; display: flex; gap: 10px; align-items: center; }
+  .hero .status i { width: 10px; height: 10px; border-radius: 50%; background: #7CF29A; display: inline-block; }
+
+  .strip { background: var(--rubber); color: var(--chalk); }
+  .strip ul { list-style: none; margin: 0 auto; padding: 22px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .strip b { display: block; font-family: "Barlow Condensed"; font-weight: 800; font-size: 34px; line-height: 1; }
+  .strip span { color: #B9BCC2; font-size: 15px; }
+
+  section { padding: 96px 0; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+  .head h2 { font-size: clamp(48px, 6vw, 84px); }
+  .head p { max-width: 32em; margin: 0; color: var(--steel); }
+
+  /* Timetable */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+  .filters button { font: 600 15px "Barlow"; padding: 8px 16px; border-radius: 999px; border: 2px solid var(--rubber); background: transparent; color: var(--rubber); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .filters button i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .filters button[aria-pressed="true"] { background: var(--rubber); color: #fff; }
+  .timetable { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .day h3 { font-size: 26px; padding: 10px 12px; background: var(--chalk); border-bottom: 4px solid var(--rubber); }
+  .day.today h3 { background: var(--rubber); color: #fff; }
+  .day ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+  .cls { background: var(--chalk); padding: 10px 12px 12px; border-left: 6px solid var(--c); }
+  .cls time { font-weight: 600; font-variant-numeric: tabular-nums; font-size: 15px; color: var(--steel); }
+  .cls strong { display: block; font-size: 17px; line-height: 1.25; }
+  .cls small { color: var(--steel); }
+  .cls.next { outline: 3px solid var(--cobalt); }
+  .cls.next::after { content: "Next class"; display: table; margin-top: 6px; font-size: 13px; font-weight: 600; color: #fff; background: var(--cobalt); padding: 1px 8px; border-radius: 3px; }
+  .cls[hidden] { display: none; }
+  .empty-note { color: var(--steel); font-size: 15px; padding: 6px 2px; }
+
+  /* Memberships */
+  #prices { background: var(--chalk); }
+  .plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .plan { border: 2px solid var(--rubber); padding: 26px 22px; display: flex; flex-direction: column; gap: 12px; background: #fff; }
+  .plan.best { border-color: var(--cobalt); box-shadow: 8px 8px 0 var(--cobalt); }
+  .plan h3 { font-size: 30px; }
+  .plan .price { font-family: "Barlow Condensed"; font-weight: 800; font-size: 52px; line-height: 1; }
+  .plan .price small { font-family: "Barlow"; font-weight: 500; font-size: 16px; color: var(--steel); }
+  .plan ul { margin: 0; padding-left: 18px; color: var(--steel); }
+  .plan .btn { margin-top: auto; text-align: center; }
+  .tag { align-self: flex-start; background: var(--cobalt); color: #fff; font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 3px; }
+
+  /* Coaches */
+  .coaches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .coach img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; filter: grayscale(.25); }
+  .coach h3 { font-size: 34px; margin-top: 14px; }
+  .coach p { margin: 6px 0 0; color: var(--steel); }
+
+  /* Free trial */
+  .trial { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+  .trial ol { padding-left: 22px; margin: 22px 0 0; display: grid; gap: 10px; font-size: 18px; }
+  form { background: var(--chalk); padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border-top: 6px solid var(--cobalt); }
+  label { display: grid; gap: 5px; font-weight: 600; font-size: 15px; }
+  label.full { grid-column: 1 / -1; }
+  input, select { font: 400 16px "Barlow"; padding: 11px 12px; border: 2px solid var(--line); border-radius: 4px; background: #fff; color: var(--rubber); }
+  input:focus, select:focus { border-color: var(--cobalt); outline: none; }
+  form .btn { grid-column: 1 / -1; justify-self: start; }
+  .msg { grid-column: 1 / -1; margin: 0; display: none; }
+  .msg.show { display: block; }
+  .msg.ok { background: var(--plate-green); color: #fff; padding: 12px 14px; border-radius: 4px; }
+  .msg.err { color: var(--plate-red); font-weight: 600; }
+
+  .find { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0; background: var(--rubber); color: var(--chalk); }
+  .find .info { padding: 48px; }
+  .find h2 { font-size: 56px; margin-bottom: 18px; }
+  .find dl { margin: 0; display: grid; gap: 14px; }
+  .find dt { color: #B9BCC2; font-size: 15px; }
+  .find dd { margin: 0; font-size: 19px; font-weight: 500; }
+  .find iframe { width: 100%; height: 100%; min-height: 380px; border: 0; filter: grayscale(.6); }
+  footer { padding: 28px 0 40px; color: var(--steel); font-size: 15px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 1000px) {
+    .timetable { grid-template-columns: repeat(3, 1fr); }
+    .plans { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 760px) {
+    .nav a.link { display: none; }
+    .hero, .trial, .find { grid-template-columns: 1fr; }
+    .hero img { height: 300px; }
+    .strip ul { grid-template-columns: 1fr 1fr; }
+    .timetable { grid-template-columns: 1fr; }
+    .plans, .coaches { grid-template-columns: 1fr; }
+    form { grid-template-columns: 1fr; padding: 22px; }
+    section { padding: 64px 0; }
+    .find .info { padding: 32px 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<header>
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top">Kovačnica</a>
+    <a class="link" href="#classes">Classes</a>
+    <a class="link" href="#prices">Prices</a>
+    <a class="link" href="#coaches">Coaches</a>
+    <a class="btn" href="#trial">Free first training</a>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1400&q=80&auto=format" alt="Athlete preparing to lift a loaded barbell">
+    <div class="panel">
+      <h1>Get strong in Niš</h1>
+      <p>Coached strength and conditioning classes for every level, an open gym from early morning to late evening, and coaches who check your technique.</p>
+      <div><a class="btn" href="#trial">Book a free first training</a></div>
+      <div class="status" id="status"><i></i><span id="status-text"></span></div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <ul class="wrap">
+      <li><b>06–23</b><span>Open every weekday</span></li>
+      <li><b>38</b><span>Coached classes a week</span></li>
+      <li><b>12</b><span>Lifting platforms</span></li>
+      <li><b>0</b><span>Contracts. Pay monthly, stop any time</span></li>
+    </ul>
+  </div>
+
+  <section id="classes">
+    <div class="wrap">
+      <div class="head">
+        <h2>Class timetable</h2>
+        <p>Every class is coached and capped at 12 people, so there's always someone watching your form. Beginners are welcome in all classes.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter classes"></div>
+      <div class="timetable" id="timetable"></div>
+    </div>
+  </section>
+
+  <section id="prices">
+    <div class="wrap">
+      <div class="head"><h2>Memberships</h2><p>All memberships include classes and the open gym. Students get 20% off with a valid student card.</p></div>
+      <div class="plans">
+        <article class="plan"><h3>Day pass</h3><div class="price">700 <small>RSD</small></div><ul><li>Open gym for one day</li><li>Any one class</li></ul><a class="btn outline" href="#trial">Ask at reception</a></article>
+        <article class="plan best"><span class="tag">Most chosen</span><h3>Monthly</h3><div class="price">4.200 <small>RSD / month</small></div><ul><li>Unlimited classes</li><li>Open gym 06–23</li><li>Free technique check every month</li></ul><a class="btn" href="#trial">Start with a free training</a></article>
+        <article class="plan"><h3>3 months</h3><div class="price">11.400 <small>RSD</small></div><ul><li>Everything in monthly</li><li>Saves 1.200 RSD</li><li>Body composition scan</li></ul><a class="btn outline" href="#trial">Start with a free training</a></article>
+        <article class="plan"><h3>Personal training</h3><div class="price">18.000 <small>RSD</small></div><ul><li>10 sessions, 1:1 with a coach</li><li>Written program for your goal</li><li>Nutrition basics</li></ul><a class="btn outline" href="#trial">Ask for a coach</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="coaches">
+    <div class="wrap">
+      <div class="head"><h2>Coaches</h2><p>Licensed strength coaches. They'll adapt every exercise to your level, injuries and goals.</p></div>
+      <div class="coaches">
+        <figure class="coach" style="margin:0"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80&auto=format" alt="Coach Ana in the gym" loading="lazy"><h3>Ana</h3><p>Strength basics and women's strength. Former national-level handball player.</p></figure>
+        <figure class="coach" style="margin:0"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80&auto=format" alt="Coach Marko lifting dumbbells" loading="lazy"><h3>Marko</h3><p>Olympic lifting and powerlifting. Takes you from your first deadlift to competition.</p></figure>
+        <figure class="coach" style="margin:0"><img src="https://images.unsplash.com/photo-1648542036561-e1d66a5ae2b1?w=800&q=80&auto=format" alt="Coach Nikola helping a client with an exercise" loading="lazy"><h3>Nikola</h3><p>Kettlebells, conditioning and mobility. Great with back pain and desk-job posture.</p></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="trial" style="padding-top:0">
+    <div class="wrap trial">
+      <div>
+        <div class="head" style="margin-bottom:0"><h2>Your first training is free</h2></div>
+        <ol>
+          <li>Tell us your goal and when you can come.</li>
+          <li>A coach calls you to pick a time.</li>
+          <li>You train one-on-one for 45 minutes and get a simple plan to start with.</li>
+        </ol>
+      </div>
+      <form id="trial-form" novalidate>
+        <label>Name<input name="name" autocomplete="name"></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel" placeholder="+381 …"></label>
+        <label>Main goal<select name="goal"><option>Get stronger</option><option>Lose weight</option><option>Fix back or posture pain</option><option>Prepare for a sport</option><option>Not sure yet</option></select></label>
+        <label>Best time<select name="time"><option>Morning (06–10)</option><option>Midday (11–15)</option><option selected>Evening (16–21)</option></select></label>
+        <p class="msg err" id="err">Add your name and phone number so a coach can call you.</p>
+        <button class="btn" type="submit">Book free training</button>
+        <p class="msg ok" id="ok" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <div class="find">
+    <div class="info">
+      <h2>Find us</h2>
+      <dl>
+        <div><dt>Address</dt><dd>Bulevar Nemanjića, Niš. Free parking behind the building.</dd></div>
+        <div><dt>Opening hours</dt><dd>Mon–Fri 06:00–23:00<br>Sat 08:00–20:00 · Sun 09:00–14:00</dd></div>
+      </dl>
+    </div>
+    <iframe title="Map of Bulevar Nemanjića, Niš" loading="lazy" src="https://maps.google.com/maps?q=Bulevar%20Nemanji%C4%87a%2C%20Ni%C5%A1&z=15&output=embed"></iframe>
+  </div>
+</main>
+
+<footer><div class="wrap"><span>Kovačnica, Niš</span><span>Concept design by Darko Kostic</span></div></footer>
+
+<script>
+  const TYPES = {
+    strength: { name: "Strength", color: "var(--plate-red)" },
+    kettlebell: { name: "Kettlebell & conditioning", color: "var(--plate-yellow)" },
+    oly: { name: "Olympic lifting", color: "var(--cobalt)" },
+    mobility: { name: "Mobility", color: "var(--plate-green)" },
+  };
+  const C = (t, time, name, coach) => ({ t, time, name, coach });
+  const WEEK = [
+    { day: "Mon", classes: [C("strength", "07:00", "Strength basics", "Ana"), C("kettlebell", "12:15", "Lunch kettlebell", "Nikola"), C("strength", "17:30", "Strength basics", "Ana"), C("oly", "19:00", "Olympic lifting", "Marko"), C("mobility", "20:15", "Mobility & stretch", "Nikola")] },
+    { day: "Tue", classes: [C("kettlebell", "07:00", "Kettlebell conditioning", "Nikola"), C("strength", "17:30", "Women's strength", "Ana"), C("kettlebell", "19:00", "Conditioning", "Nikola"), C("oly", "20:00", "Squat & deadlift clinic", "Marko")] },
+    { day: "Wed", classes: [C("strength", "07:00", "Strength basics", "Ana"), C("mobility", "12:15", "Desk-job mobility", "Nikola"), C("strength", "17:30", "Strength basics", "Ana"), C("oly", "19:00", "Olympic lifting", "Marko"), C("kettlebell", "20:15", "Conditioning", "Nikola")] },
+    { day: "Thu", classes: [C("kettlebell", "07:00", "Kettlebell conditioning", "Nikola"), C("strength", "17:30", "Women's strength", "Ana"), C("oly", "19:00", "Squat & deadlift clinic", "Marko"), C("mobility", "20:15", "Mobility & stretch", "Nikola")] },
+    { day: "Fri", classes: [C("strength", "07:00", "Strength basics", "Ana"), C("kettlebell", "12:15", "Lunch kettlebell", "Nikola"), C("oly", "18:00", "Olympic lifting", "Marko"), C("kettlebell", "19:15", "Friday finisher", "Nikola")] },
+    { day: "Sat", classes: [C("strength", "09:00", "Team strength", "Ana"), C("oly", "10:30", "Lifting open session", "Marko"), C("mobility", "12:00", "Mobility & stretch", "Nikola")] },
+  ];
+
+  let active = "all";
+  const filters = document.getElementById("filters");
+  const addFilter = (key, label, color) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.dataset.key = key; b.setAttribute("aria-pressed", key === "all");
+    b.innerHTML = (color ? `<i style="background:${color}"></i>` : "") + label;
+    b.onclick = () => { active = key; filters.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); render(); };
+    filters.appendChild(b);
+  };
+  addFilter("all", "All classes");
+  Object.entries(TYPES).forEach(([k, v]) => addFilter(k, v.name, v.color));
+
+  const now = new Date();
+  const todayIdx = (now.getDay() + 6) % 7; // Mon = 0
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const toMin = t => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+
+  // Find the next class from now (today later, or the next training day).
+  function findNext() {
+    for (let k = 0; k < 7; k++) {
+      const i = (todayIdx + k) % 7;
+      if (i > 5) continue;
+      const c = WEEK[i].classes.find(c => (active === "all" || c.t === active) && (k > 0 || toMin(c.time) > nowMin));
+      if (c) return c;
+    }
+    return null;
+  }
+
+  function render() {
+    const tt = document.getElementById("timetable");
+    tt.innerHTML = "";
+    const next = findNext();
+    WEEK.forEach((d, i) => {
+      const col = document.createElement("div");
+      col.className = "day" + (i === todayIdx ? " today" : "");
+      col.innerHTML = `<h3>${d.day}${i === todayIdx ? " · today" : ""}</h3><ul></ul>`;
+      const ul = col.querySelector("ul");
+      const shown = d.classes.filter(c => active === "all" || c.t === active);
+      shown.forEach(c => {
+        const li = document.createElement("li");
+        li.className = "cls" + (c === next ? " next" : "");
+        li.style.setProperty("--c", TYPES[c.t].color);
+        li.innerHTML = `<time>${c.time}</time><strong>${c.name}</strong><small>with ${c.coach}</small>`;
+        ul.appendChild(li);
+      });
+      if (!shown.length) ul.innerHTML = '<li class="empty-note">No classes of this type.</li>';
+      tt.appendChild(col);
+    });
+  }
+  render();
+
+  // Open / closed status
+  const hours = todayIdx < 5 ? ["06:00", "23:00"] : todayIdx === 5 ? ["08:00", "20:00"] : ["09:00", "14:00"];
+  const open = nowMin >= toMin(hours[0]) && nowMin < toMin(hours[1]);
+  document.getElementById("status-text").textContent = open ? `Open now, until ${hours[1]}` : `Closed now. Opens at ${todayIdx < 5 && nowMin < toMin(hours[0]) ? hours[0] : "06:00"}`;
+  if (!open) document.querySelector("#status i").style.background = "#B9BCC2";
+
+  // Free trial form: validates and confirms; not connected to email yet.
+  document.getElementById("trial-form").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target, err = document.getElementById("err"), ok = document.getElementById("ok");
+    const bad = !f.name.value.trim() || f.phone.value.replace(/\D/g, "").length < 6;
+    err.classList.toggle("show", bad);
+    ok.classList.toggle("show", !bad);
+    if (!bad) ok.textContent = `Thanks, ${f.name.value.trim()}. This form isn't connected yet, so nothing was sent. Once it is, a coach will call you to book your free training.`;
+  });
+</script>
+</body>
+</html>
